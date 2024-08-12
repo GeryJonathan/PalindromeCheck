@@ -27,6 +27,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
     if (isRefresh) {
       _page = 1;
       _isLastPage = false;
+      _users.clear();
     }
 
     setState(() {
@@ -67,6 +68,21 @@ class _ThirdScreenState extends State<ThirdScreen> {
     await _fetchUsers(isRefresh: true);
   }
 
+  void _nextPage() {
+    if (!_isLastPage && !_isLoading) {
+      _fetchUsers();
+    }
+  }
+
+  void _previousPage() {
+    if (_page > 2 && !_isLoading) {
+      setState(() {
+        _page -= 2; // To correctly fetch the previous page
+      });
+      _fetchUsers(isRefresh: true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,44 +96,64 @@ class _ThirdScreenState extends State<ThirdScreen> {
         elevation: 1,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: _users.isEmpty && !_isLoading
-          ? const Center(
-              child: Text(
-                'No users available. Pull to refresh.',
-                style: TextStyle(color: Colors.black54),
-              ),
-            )
-          : RefreshIndicator(
-              onRefresh: _onRefresh,
-              child: ListView.builder(
-                itemCount: _users.length + (_isLastPage ? 0 : 1),
-                itemBuilder: (context, index) {
-                  if (index == _users.length) {
-                    _fetchUsers();
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  final user = _users[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(user['avatar']),
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Expanded(
+              child: _users.isEmpty && !_isLoading
+                  ? const Center(
+                      child: Text(
+                        'No users available. Pull to refresh.',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    )
+                  : RefreshIndicator(
+                      onRefresh: _onRefresh,
+                      child: ListView.builder(
+                        itemCount: _users.length + (_isLastPage ? 0 : 1),
+                        itemBuilder: (context, index) {
+                          if (index == _users.length) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          final user = _users[index];
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(user['avatar']),
+                            ),
+                            title: Text(
+                              '${user['first_name']} ${user['last_name']}',
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            subtitle: Text(
+                              user['email'],
+                              style: const TextStyle(color: Colors.black54),
+                            ),
+                            onTap: () => _selectUser({
+                              'name':
+                                  '${user['first_name']} ${user['last_name']}',
+                              'email': user['email'],
+                              'avatar': user['avatar'],
+                            }),
+                          );
+                        },
+                      ),
                     ),
-                    title: Text(
-                      '${user['first_name']} ${user['last_name']}',
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                    subtitle: Text(
-                      user['email'],
-                      style: const TextStyle(color: Colors.black54),
-                    ),
-                    onTap: () => _selectUser({
-                      'name': '${user['first_name']} ${user['last_name']}',
-                      'email': user['email'],
-                      'avatar': user['avatar'],
-                    }),
-                  );
-                },
-              ),
             ),
+            if (_users.isNotEmpty && !_isLastPage)
+              ElevatedButton(
+                onPressed: _nextPage,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('Next'),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

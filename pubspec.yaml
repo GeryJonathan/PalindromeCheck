@@ -1,4 +1,4 @@
-name: palindromememe_project
+name: palindrome_project
 description: "A new Flutter project."
 
 # Prevent accidental publishing to pub.dev.
@@ -12,6 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^6.1.2
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.9

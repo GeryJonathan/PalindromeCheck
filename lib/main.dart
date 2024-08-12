@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-
-import 'package:palindromememe_project/splashscreen.dart';
+import 'package:provider/provider.dart';
+import 'app_state.dart'; // Import the AppState class
+import 'splashscreen.dart'; // Ensure you have this file
 
 void main() {
-  runApp(const App());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppState(),
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {

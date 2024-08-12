@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:palindromememe_project/firstpage.dart';
+import 'firstpage.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key});
