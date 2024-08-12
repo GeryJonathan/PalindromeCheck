@@ -77,7 +77,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
   void _previousPage() {
     if (_page > 2 && !_isLoading) {
       setState(() {
-        _page -= 2; // To correctly fetch the previous page
+        _page -= 2; 
       });
       _fetchUsers(isRefresh: true);
     }

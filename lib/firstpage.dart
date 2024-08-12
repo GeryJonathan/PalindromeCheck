@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_state.dart';
-import 'secondpage.dart'; // Import the SecondScreen
+import 'secondpage.dart'; 
 
 class PalindromeCheckerPage extends StatefulWidget {
   const PalindromeCheckerPage({super.key});
@@ -14,13 +14,11 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
   final _nameController = TextEditingController();
   final _sentenceController = TextEditingController();
 
-  // Method to check if a sentence is a palindrome
   bool isPalindrome(String text) {
     text = text.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
     return text == text.split('').reversed.join('');
   }
 
-  // Method to show alert dialogs for validation
   void _showAlert(String message) {
     showDialog(
       context: context,
@@ -37,7 +35,6 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
     );
   }
 
-  // Method to check if the sentence is a palindrome and show the result in a dialog
   void _checkPalindrome() {
     if (_nameController.text.isEmpty) {
       _showAlert('Please enter your name.');
@@ -68,7 +65,6 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
     );
   }
 
-  // Method to navigate to the SecondScreen with the entered name
   void _navigateToSecondScreen() {
     if (_nameController.text.isEmpty) {
       _showAlert('Please enter your name.');
@@ -79,7 +75,7 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
     appState.setName(_nameController.text);
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return const SecondScreen(); // Navigate to SecondScreen
+      return const SecondScreen();
     }));
   }
 
@@ -112,7 +108,6 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
                   height: 220,
                 ),
                 const SizedBox(height: 32.0),
-                // Input text for name
                 TextField(
                   controller: _nameController,
                   decoration: InputDecoration(
@@ -126,7 +121,6 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                // Input text for sentence
                 TextField(
                   controller: _sentenceController,
                   decoration: InputDecoration(
@@ -140,7 +134,6 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
                   ),
                 ),
                 const SizedBox(height: 32.0),
-                // Check button
                 ElevatedButton(
                   onPressed: _checkPalindrome,
                   style: ElevatedButton.styleFrom(
@@ -153,7 +146,6 @@ class _PalindromeCheckerPageState extends State<PalindromeCheckerPage> {
                   child: const Text('Check'),
                 ),
                 const SizedBox(height: 16.0),
-                // Next button
                 ElevatedButton(
                   onPressed: _navigateToSecondScreen,
                   style: ElevatedButton.styleFrom(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_state.dart';
-import 'thirdpage.dart'; // Import the ThirdScreen
+import 'thirdpage.dart'; 
 
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});

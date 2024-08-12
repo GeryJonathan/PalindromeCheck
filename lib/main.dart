@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'app_state.dart'; // Import the AppState class
-import 'splashscreen.dart'; // Ensure you have this file
+import 'app_state.dart'; 
+import 'splashscreen.dart';
 
 void main() {
   runApp(
